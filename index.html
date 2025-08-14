@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackjack Deluxe</title>
+    <title>Blackjack Multi-Mains</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,30 +15,39 @@
                 <div id="dealer-hand" class="hand-container"></div>
             </div>
 
-            <div id="messages">Placez vos mises en glissant les jetons.</div>
+            <div id="messages">Placez vos mises sur un ou plusieurs jeux.</div>
 
-             <div id="betting-area">
-                <div class="side-bet-container">
-                    <div id="drop-zone-21plus3" class="drop-zone" data-bet-type="twentyoneplus3">
-                        <span class="bet-label">21+3</span>
-                        <span class="bet-amount" id="bet-amount-21plus3">0€</span>
+            <div id="player-slots-container">
+                <div class="player-slot" data-slot-index="0">
+                    <div class="hand-status"></div>
+                    <div class="hand-container"></div>
+                    <div class="score-container">Score: <span class="score"></span></div>
+                    <div class="betting-spots">
+                        <div class="drop-zone" data-bet-type="main"><span class="bet-amount">0€</span></div>
+                        <div class="drop-zone side" data-bet-type="perfectpairs">PP</div>
+                        <div class="drop-zone side" data-bet-type="twentyoneplus3">21+3</div>
                     </div>
                 </div>
-                <div id="drop-zone-main" class="drop-zone main-bet" data-bet-type="main">
-                    <span class="bet-label">Mise Principale</span>
-                    <span class="bet-amount" id="bet-amount-main">0€</span>
-                </div>
-                <div class="side-bet-container">
-                    <div id="drop-zone-perfectpairs" class="drop-zone" data-bet-type="perfectpairs">
-                        <span class="bet-label">Paires Parfaites</span>
-                        <span class="bet-amount" id="bet-amount-perfectpairs">0€</span>
+                <div class="player-slot" data-slot-index="1">
+                    <div class="hand-status"></div>
+                    <div class="hand-container"></div>
+                    <div class="score-container">Score: <span class="score"></span></div>
+                    <div class="betting-spots">
+                        <div class="drop-zone" data-bet-type="main"><span class="bet-amount">0€</span></div>
+                        <div class="drop-zone side" data-bet-type="perfectpairs">PP</div>
+                        <div class="drop-zone side" data-bet-type="twentyoneplus3">21+3</div>
                     </div>
                 </div>
-            </div>
-
-            <div id="player-area" class="hand-area">
-                <h2 class="area-title">Joueur <span id="player-score" class="score"></span></h2>
-                <div id="player-hand" class="hand-container"></div>
+                <div class="player-slot" data-slot-index="2">
+                    <div class="hand-status"></div>
+                    <div class="hand-container"></div>
+                    <div class="score-container">Score: <span class="score"></span></div>
+                    <div class="betting-spots">
+                        <div class="drop-zone" data-bet-type="main"><span class="bet-amount">0€</span></div>
+                        <div class="drop-zone side" data-bet-type="perfectpairs">PP</div>
+                        <div class="drop-zone side" data-bet-type="twentyoneplus3">21+3</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -50,18 +59,16 @@
                 <div class="chip" data-value="25" draggable="true">25</div>
                 <div class="chip" data-value="100" draggable="true">100</div>
             </div>
-
             <div id="game-actions">
                 <button id="btn-deal">Distribuer</button>
-                <button id="btn-rebet-double">Miser Double</button> <button id="btn-clear">Annuler</button>
+                <button id="btn-rebet-double">Miser Double</button>
+                <button id="btn-clear">Annuler</button>
             </div>
-            
             <div id="player-actions">
                 <button id="btn-hit">Tirer</button>
                 <button id="btn-double">Doubler</button>
                 <button id="btn-stand">Rester</button>
             </div>
-            
             <div id="player-info">
                 <span>Solde: <span id="balance">100</span>€</span>
                 <button id="btn-reset-balance">Réinitialiser (100€)</button>
