@@ -3,463 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackjack</title>
-    <style>
-        /* --- Style Général --- */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* --- La Table de Jeu --- */
-        #game-table {
-            background-color: #006400; /* Vert tapis */
-            border: 15px solid #543d2b;
-            border-radius: 150px 150px 0 0;
-            padding: 30px;
-            width: 100%;
-            max-width: 900px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .hand-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 125px;
-            gap: 10px;
-            position: relative;
-        }
-
-        .area-title {
-            position: absolute;
-            top: -10px;
-            background: rgba(0,0,0,0.3);
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
-
-        #dealer-area .area-title { top: auto; bottom: -15px; }
-
-
-        /* --- Les Cartes --- */
-        .card {
-            width: 80px;
-            height: 115px;
-            background-color: #fff;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            font-size: 1.8em;
-            font-weight: bold;
-            position: relative;
-            animation: deal-card 0.4s ease-out;
-        }
-        
-        .card.hidden {
-            background: repeating-linear-gradient(
-                45deg,
-                #640000,
-                #640000 10px,
-                #8b0000 10px,
-                #8b0000 20px
-            );
-            color: transparent;
-        }
-
-        .card .rank { padding-left: 5px; }
-        .card .suit { align-self: flex-end; padding-right: 5px; }
-        .card .suit.bottom { transform: rotate(180deg); }
-        .card .suit.red { color: #d90429; }
-        .card .suit.black { color: #000; }
-
-        @keyframes deal-card {
-            from { transform: translateY(-100px) rotateX(90deg); opacity: 0; }
-            to { transform: translateY(0) rotateX(0deg); opacity: 1; }
-        }
-
-        /* --- Scores et Messages --- */
-        .score {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #ffc300;
-            background: rgba(0,0,0,0.4);
-            padding: 5px 10px;
-            border-radius: 20px;
-            position: absolute;
-        }
-        #player-score { left: 20px; }
-        #dealer-score { right: 20px; }
-        
-        #messages {
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffd60a;
-        }
-
-        /* --- Panneau de Contrôles --- */
-        #controls-panel {
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        #player-actions, #betting-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* --- Boutons et Inputs --- */
-        button {
-            padding: 12px 20px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            color: #fff;
-            box-shadow: 0 4px #999;
-            transition: all 0.1s ease-in-out;
-        }
-        
-        button:active {
-            box-shadow: 0 2px #666;
-            transform: translateY(2px);
-        }
-
-        button:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-            box-shadow: 0 4px #495057;
-        }
-
-        #btn-hit { background-color: #2a9d8f; box-shadow: 0 4px #207a6e; }
-        #btn-stand { background-color: #e76f51; box-shadow: 0 4px #b85840; }
-        #btn-bet { background-color: #457b9d; box-shadow: 0 4px #335a72; }
-        #btn-reset-balance { background-color: #fca311; color: #000; box-shadow: 0 4px #c9820e;}
-        
-        input#bet-amount {
-            width: 80px;
-            padding: 10px;
-            font-size: 1em;
-            text-align: center;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
-        
-        /* --- Solde --- */
-        #player-info {
-            text-align: center;
-            font-size: 1.2em;
-            background: #222;
-            padding: 10px;
-            border-radius: 0 0 10px 10px;
-        }
-    </style>
+    <title>Blackjack Deluxe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="game-table">
-        <div id="dealer-area" class="hand-area">
-            <div class="area-title">Croupier</div>
-            <div id="dealer-hand" class="hand-container"></div>
-            <div id="dealer-score" class="score"></div>
-        </div>
+    <div id="game-container">
+        <div id="game-table">
+            <div id="dealer-area" class="hand-area">
+                <h2 class="area-title">Croupier <span id="dealer-score" class="score"></span></h2>
+                <div id="dealer-hand" class="hand-container"></div>
+            </div>
 
-        <div id="messages">FAITES VOS JEUX</div>
+            <div id="messages">Placez vos mises en glissant les jetons.</div>
 
-        <div id="player-area" class="hand-area">
-            <div class="area-title">Joueur</div>
-            <div id="player-hand" class="hand-container"></div>
-            <div id="player-score" class="score"></div>
+             <div id="betting-area">
+                <div class="side-bet-container">
+                    <div id="drop-zone-21plus3" class="drop-zone" data-bet-type="twentyoneplus3">
+                        <span class="bet-label">21+3</span>
+                        <span class="bet-amount" id="bet-amount-21plus3">0€</span>
+                    </div>
+                </div>
+                <div id="drop-zone-main" class="drop-zone main-bet" data-bet-type="main">
+                    <span class="bet-label">Mise Principale</span>
+                    <span class="bet-amount" id="bet-amount-main">0€</span>
+                </div>
+                <div class="side-bet-container">
+                    <div id="drop-zone-perfectpairs" class="drop-zone" data-bet-type="perfectpairs">
+                        <span class="bet-label">Paires Parfaites</span>
+                        <span class="bet-amount" id="bet-amount-perfectpairs">0€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="player-area" class="hand-area">
+                <h2 class="area-title">Joueur <span id="player-score" class="score"></span></h2>
+                <div id="player-hand" class="hand-container"></div>
+            </div>
         </div>
 
         <div id="controls-panel">
+            <div id="chip-rack">
+                <div class="chip" data-value="1" draggable="true">1</div>
+                <div class="chip" data-value="5" draggable="true">5</div>
+                <div class="chip" data-value="10" draggable="true">10</div>
+                <div class="chip" data-value="25" draggable="true">25</div>
+                <div class="chip" data-value="100" draggable="true">100</div>
+            </div>
+
+            <div id="game-actions">
+                <button id="btn-deal">Distribuer</button>
+                <button id="btn-clear">Annuler Mises</button>
+            </div>
+            
             <div id="player-actions">
-                <button id="btn-hit" onclick="hit()">Tirer</button>
-                <button id="btn-stand" onclick="stand()">Rester</button>
+                <button id="btn-hit">Tirer</button>
+                <button id="btn-stand">Rester</button>
             </div>
-            <div id="betting-controls">
-                <input type="number" id="bet-amount" value="10" min="1">
-                <button id="btn-bet" onclick="placeBet()">Miser</button>
+            
+            <div id="player-info">
+                <span>Solde: <span id="balance">100</span>€</span>
+                <button id="btn-reset-balance">Réinitialiser (100€)</button>
             </div>
         </div>
-        
-        <div id="player-info">
-            <span>Solde: <span id="balance">100</span>€</span>
-            <button id="btn-reset-balance" onclick="resetBalance()">Réinitialiser Solde (100€)</button>
-        </div>
+
     </div>
 
-    <script>
-        // --- Références aux éléments du DOM ---
-        const dealerHandEl = document.getElementById('dealer-hand');
-        const playerHandEl = document.getElementById('player-hand');
-        const dealerScoreEl = document.getElementById('dealer-score');
-        const playerScoreEl = document.getElementById('player-score');
-        const messagesEl = document.getElementById('messages');
-        const balanceEl = document.getElementById('balance');
-        const betAmountInput = document.getElementById('bet-amount');
-        
-        const hitBtn = document.getElementById('btn-hit');
-        const standBtn = document.getElementById('btn-stand');
-        const betBtn = document.getElementById('btn-bet');
-
-        // --- Variables du jeu ---
-        let deck = [];
-        let playerHand = [];
-        let dealerHand = [];
-        let playerScore = 0;
-        let dealerScore = 0;
-        let balance = 100;
-        let currentBet = 0;
-        let gameInProgress = false;
-
-        const SUITS = ['♥', '♦', '♠', '♣'];
-        const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-
-        // --- Fonctions du jeu ---
-
-        /** Crée et mélange un nouveau paquet de cartes */
-        function createDeck() {
-            deck = [];
-            for (const suit of SUITS) {
-                for (const rank of RANKS) {
-                    deck.push({ suit, rank });
-                }
-            }
-            // Mélange du paquet (algorithme Fisher-Yates)
-            for (let i = deck.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [deck[i], deck[j]] = [deck[j], deck[i]];
-            }
-        }
-
-        /** Calcule la valeur d'une main, en gérant les As */
-        function calculateScore(hand) {
-            let score = 0;
-            let aceCount = 0;
-            for (const card of hand) {
-                if (card.rank === 'A') {
-                    aceCount++;
-                    score += 11;
-                } else if (['K', 'Q', 'J'].includes(card.rank)) {
-                    score += 10;
-                } else {
-                    score += parseInt(card.rank);
-                }
-            }
-            // Gère les As si le score dépasse 21
-            while (score > 21 && aceCount > 0) {
-                score -= 10;
-                aceCount--;
-            }
-            return score;
-        }
-
-        /** Place le pari et démarre une nouvelle partie */
-        function placeBet() {
-            const betValue = parseInt(betAmountInput.value);
-            if (isNaN(betValue) || betValue <= 0) {
-                messagesEl.textContent = "Mise invalide !";
-                return;
-            }
-            if (betValue > balance) {
-                messagesEl.textContent = "Solde insuffisant !";
-                return;
-            }
-
-            currentBet = betValue;
-            balance -= currentBet;
-            gameInProgress = true;
-            
-            // Réinitialise l'état du jeu pour une nouvelle manche
-            playerHand = [];
-            dealerHand = [];
-            createDeck();
-
-            // Distribution initiale
-            playerHand.push(deck.pop());
-            dealerHand.push(deck.pop());
-            playerHand.push(deck.pop());
-            dealerHand.push(deck.pop());
-            
-            updateUI();
-            checkInitialBlackjack();
-        }
-
-        /** Le joueur tire une carte */
-        function hit() {
-            if (!gameInProgress) return;
-            playerHand.push(deck.pop());
-            updateUI();
-
-            if (playerScore > 21) {
-                endRound("Le joueur a sauté ! Le croupier gagne.", 0);
-            }
-        }
-
-        /** Le joueur termine son tour, le croupier joue */
-        function stand() {
-            if (!gameInProgress) return;
-            hitBtn.disabled = true;
-            standBtn.disabled = true;
-            dealerTurn();
-        }
-
-        /** Logique du tour du croupier */
-        function dealerTurn() {
-            // Révèle la carte cachée
-            updateUI(true); 
-
-            const dealerPlay = () => {
-                if (dealerScore < 17) {
-                    dealerHand.push(deck.pop());
-                    updateUI(true);
-                    setTimeout(dealerPlay, 800); // Délai pour un effet visuel
-                } else {
-                    determineWinner();
-                }
-            };
-            setTimeout(dealerPlay, 800);
-        }
-
-        /** Détermine le gagnant à la fin de la manche */
-        function determineWinner() {
-            if (dealerScore > 21) {
-                endRound("Le croupier a sauté ! Le joueur gagne.", 2); // 1:1, donc x2 la mise
-            } else if (playerScore > dealerScore) {
-                endRound("Le joueur gagne !", 2); // 1:1
-            } else if (dealerScore > playerScore) {
-                endRound("Le croupier gagne.", 0);
-            } else {
-                endRound("Égalité (Push).", 1); // Remboursement
-            }
-        }
-
-        /** Vérifie si le joueur a un Blackjack au départ */
-        function checkInitialBlackjack() {
-            if (playerScore === 21) {
-                // Révèle la carte du croupier pour voir s'il a aussi un Blackjack
-                updateUI(true);
-                if (dealerScore === 21) {
-                     endRound("Égalité, deux Blackjacks !", 1);
-                } else {
-                    endRound("Blackjack ! Le joueur gagne.", 2.5); // Payout 3:2
-                }
-            }
-        }
-
-        /** Termine la manche et gère les gains/pertes */
-        function endRound(message, payoutMultiplier) {
-            gameInProgress = false;
-            messagesEl.textContent = message;
-            balance += currentBet * payoutMultiplier;
-            updateUI(true); // Afficher la main complète du croupier
-        }
-        
-        /** Met à jour toute l'interface utilisateur */
-        function updateUI(revealDealerCard = false) {
-            // Met à jour le solde
-            balanceEl.textContent = balance.toFixed(2);
-            
-            // Met à jour les mains et scores
-            playerScore = calculateScore(playerHand);
-            playerScoreEl.textContent = playerScore;
-            renderHand(playerHand, playerHandEl);
-
-            dealerScore = calculateScore(dealerHand);
-            if (gameInProgress && !revealDealerCard) {
-                // Cache la première carte et le score du croupier
-                renderHand(dealerHand, dealerHandEl, true);
-                dealerScoreEl.textContent = '?';
-            } else {
-                renderHand(dealerHand, dealerHandEl, false);
-                dealerScoreEl.textContent = dealerScore;
-            }
-
-            // Gère l'état des boutons
-            if (gameInProgress) {
-                hitBtn.disabled = false;
-                standBtn.disabled = false;
-                betBtn.disabled = true;
-                betAmountInput.disabled = true;
-            } else {
-                hitBtn.disabled = true;
-                standBtn.disabled = true;
-                betBtn.disabled = false;
-                betAmountInput.disabled = false;
-                if (balance <= 0) {
-                     betBtn.disabled = true;
-                     messagesEl.textContent = "Partie terminée. Réinitialisez le solde !";
-                }
-            }
-        }
-        
-        /** Affiche les cartes d'une main dans le DOM */
-        function renderHand(hand, element, hideFirstCard = false) {
-            element.innerHTML = '';
-            hand.forEach((card, index) => {
-                const cardEl = document.createElement('div');
-                if (index === 0 && hideFirstCard) {
-                    cardEl.className = 'card hidden';
-                } else {
-                    cardEl.className = 'card';
-                    const suitColor = (card.suit === '♥' || card.suit === '♦') ? 'red' : 'black';
-                    cardEl.innerHTML = `
-                        <span class="rank">${card.rank}</span>
-                        <span class="suit ${suitColor}">${card.suit}</span>
-                        <span class="suit bottom ${suitColor}">${card.suit}</span>
-                    `;
-                }
-                element.appendChild(cardEl);
-            });
-        }
-        
-        /** Fonction demandée pour réinitialiser le solde */
-        function resetBalance() {
-            balance = 100;
-            if (!gameInProgress) {
-                messagesEl.textContent = "FAITES VOS JEUX";
-            }
-            updateUI();
-        }
-
-        // --- Initialisation du jeu ---
-        window.onload = () => {
-            createDeck();
-            updateUI();
-        };
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
