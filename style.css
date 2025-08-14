@@ -100,8 +100,8 @@ body {
 .card .suit.red { color: #d90429; }
 /* .black est implicite par la couleur par défaut de .card */
 @keyframes deal-card {
-    from { transform: translateY(-200px) rotateX(90deg); opacity: 0; }
-    to { transform: translateY(0) rotateX(0deg); opacity: 1; }
+    from { transform: translateY(-200px) rotateX(90deg) scale(0.8); opacity: 0; }
+    to { transform: translateY(0) rotateX(0deg) scale(1); opacity: 1; }
 }
 
 /* --- Zones de Mises (Drop Zones) --- */
@@ -198,6 +198,7 @@ button {
 }
 button:hover { filter: brightness(1.1); }
 button:active { transform: scale(0.95); }
-button:disabled { background-color: #6c757d; cursor: not-allowed; }
+button:disabled { background-color: #6c757d; cursor: not-allowed; filter: brightness(0.7);}
 #btn-clear { background-color: #e76f51; }
+#btn-double { background-color: #f4a261; } /* NOUVEAU STYLE */
 #btn-reset-balance { background-color: #fca311; color: #000; }
